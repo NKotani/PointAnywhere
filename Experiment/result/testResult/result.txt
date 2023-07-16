@@ -1,0 +1,66 @@
+Experiment/result3/testResult/score.txt
+top-1 accuracy = 0.5 個数3
+top-5 accuracy = 0.83 個数5
+top-10 accuracy = 1.0 個数6
+方向性は合ってる(top5) = 1
+{1: 3, 2: 2, 6: 1}
+Experiment/result3/testResult/score_number.txt
+top-1 accuracy = 0.67 個数4
+top-5 accuracy = 1.0 個数6
+top-10 accuracy = 1.0 個数6
+方向性は合ってる(top5) = 0
+{1: 4, 2: 1, 3: 1}
+Experiment/result3/testResult/score_confi.txt
+top-1 accuracy = 0.83 個数5
+top-5 accuracy = 1.0 個数6
+top-10 accuracy = 1.0 個数6
+方向性は合ってる(top5) = 0
+{1: 5, 2: 1}
+Experiment/result3/testResult/score_only.txt
+top-1 accuracy = 0.5 個数3
+top-5 accuracy = 1.0 個数6
+top-10 accuracy = 1.0 個数6
+方向性は合ってる(top5) = 0
+{1: 3, 2: 1, 4: 1, 3: 1}
+Experiment/result3/testResult/scoreAREA.txt
+top-1 accuracy = 0.17 個数1
+top-5 accuracy = 0.83 個数5
+top-10 accuracy = 0.83 個数5
+方向性は合ってる(top5) = 1
+{1: 1, 3: 2, 16: 1, 2: 2}
+Experiment/result3/testResult/score_svm.txt
+top-1 accuracy = 0.17 個数1
+top-5 accuracy = 0.5 個数3
+top-10 accuracy = 0.83 個数5
+方向性は合ってる(top5) = 3
+{6: 1, 10: 1, 3: 2, 1: 1, 22: 1}
+Experiment/result3/testResult/score_svmrbf.txt
+top-1 accuracy = 0.0 個数0
+top-5 accuracy = 0.67 個数4
+top-10 accuracy = 0.67 個数4
+方向性は合ってる(top5) = 2
+{2: 1, 4: 1, 15: 1, 5: 1, 18: 1, 3: 1}
+Experiment/result3/testResult/score_svmnorm.txt
+top-1 accuracy = 0.67 個数4
+top-5 accuracy = 1.0 個数6
+top-10 accuracy = 1.0 個数6
+方向性は合ってる(top5) = 0
+{1: 4, 5: 1, 2: 1}
+Experiment/result3/testResult/score_svmnormrbf.txt
+top-1 accuracy = 0.33 個数2
+top-5 accuracy = 1.0 個数6
+top-10 accuracy = 1.0 個数6
+方向性は合ってる(top5) = 0
+{1: 2, 5: 1, 3: 1, 2: 2}
+Experiment/result3/testResult/score_svmstd.txt
+top-1 accuracy = 0.5 個数3
+top-5 accuracy = 1.0 個数6
+top-10 accuracy = 1.0 個数6
+方向性は合ってる(top5) = 0
+{1: 3, 2: 3}
+Experiment/result3/testResult/score_svmstdrbf.txt
+top-1 accuracy = 0.5 個数3
+top-5 accuracy = 1.0 個数6
+top-10 accuracy = 1.0 個数6
+方向性は合ってる(top5) = 0
+{1: 3, 2: 3}
