@@ -1,5 +1,3 @@
-!images/*.jpg
-
 # yolov5
 # Repo-specific GitIgnore ----------------------------------------------------------------------------------------------
 *.out
@@ -268,3 +266,6 @@ hiddenlayer/
 __pycache__
 *.prototxt
 videos/
+
+# PointAnywhere
+!/images/*.jpg
