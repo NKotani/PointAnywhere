@@ -1,3 +1,4 @@
+import argparse
 import Test
 import PointingVector
 import Equi2Pers as E2P
@@ -20,11 +21,16 @@ from ml import Data
 
 body_estimation = Body('pytorch_openpose/model/body_pose_model.pth')
 
+parser = argparse.ArgumentParser(description='Estimate a pointing object')
+parser.add_argument('-input', default='inputOmni', type=str, help='path of equirectangular images') # './inputOmni/R0010095.JPG', '../../dataset/image'
+parser.add_argument('-testMODE', default=0, type=int, help='do not save images') # 1のとき余計な画像保存しない
+args = parser.parse_args()
+
+input =  args.input
+testMODE = args.testMODE 
+
 dt_now = datetime.datetime.now()
 stdout = dt_now.strftime('%Y%m%dg%H%M%S')
-
-input = sys.argv[1] # './inputOmni/R0010095.JPG', '../../dataset/image' image,2,3で全データセット
-testMODE = int(sys.argv[2]) # 1のとき余計な画像保存しない
 
 save_dir = increment_path(Path('./Experiment') / 'result', exist_ok=False)  # increment run
 print(save_dir)

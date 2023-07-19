@@ -27,10 +27,8 @@ conda install -c anaconda scikit-learn
 骨格検出や物体検出のモデルもダウンロードする必要があります。全体のコードはこのレポジトリに含まれているのでクローンする必要はありません。
 
 ## Usage
-定性評価(画像が生成されます)
 ```
-cd pytorch-openpose
-python run.py inputOmni 0
+python run.py
 ```
 testResult内の画像について
 * distance: 全指示物体候補
@@ -46,17 +44,11 @@ testResult内の画像について
 * svm: 線形SVCでデータを標準化
 * svmrbf: rbfカーネルのSVCでデータを標準化
 
-定量評価(画像は生成されません)
-```
-cd pytorch-openpose
-python run.py inputOmni 1
-```
-
 結果はExperiment/resultN (Nは数字)に保存されます。
 Experiment/resultN/testResult/result.txt にtop-k accuracyが表示されます。
 
 ## Dataset
-[こちらからダウンロードできます](https://drive.google.com/drive/folders/17BXn-vFv390EeBbiVqhUBWeIOnqt3th0)
+[こちらからダウンロードできます。](https://drive.google.com/drive/folders/17BXn-vFv390EeBbiVqhUBWeIOnqt3th0)
 
 ここでは、全天球画像名をsphere.jpgとして説明します。
 * image.zip: 全天球画像290枚
@@ -71,6 +63,7 @@ Experiment/resultN/testResult/result.txt にtop-k accuracyが表示されます�
         * YOLOv5で人を検出できなかった場合はこのtxtファイルは存在しません。
     * skeleton/sphere/human.txt: 人周辺領域のみをperspective画像にしたときの変数
         * 表記形式は(fov_person, theta_person, phi_person, h_perspective_person, w_perspective_person)です。
+        * labels/sphere.txtを元に算出される値です。
     * skeleton/sphere/human.npz    
         * candidate, subset: OpenPoseによって推定された関節
         * 表記形式は[OpenPose](https://github.com/Hzzone/pytorch-openpose)を参照してください。
