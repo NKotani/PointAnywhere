@@ -1,5 +1,12 @@
-# 全天球画像からの指示物体推定
-## 環境構築
+PointAnywhere
+====
+全天球画像からの指示物体推定を行うコードです。
+![The equirectangular image of a user pointing to a white car outdoors.](images/R0010498_top5.jpg "A Successful example")
+
+Nanami Kotani and Asako Kanezaki. 2023. Point Anywhere: Directed Object Estimation from Omnidirectional Images. In ACM SIGGRAPH 2023 Posters (SIGGRAPH '23). Association for Computing Machinery, New York, NY, USA, Article 33, 1–2. https://doi.org/10.1145/3588028.3603650
+* [ACM showcase on Kudos](https://link.growkudos.com/1cvv7ucfim8)
+
+## Installation and Requirement
 * 骨格検出: [OpenPose](https://github.com/Hzzone/pytorch-openpose)
 * 物体検出: [YOLOv5](https://github.com/ultralytics/yolov5)
 * 線形SVC: scikit-learn
@@ -19,7 +26,7 @@ conda install -c anaconda scikit-learn
 
 骨格検出や物体検出のモデルもダウンロードする必要があります。全体のコードはこのレポジトリに含まれているのでクローンする必要はありません。
 
-## 実行方法
+## Usage
 定性評価(画像が生成されます)
 ```
 cd pytorch-openpose
@@ -48,7 +55,7 @@ python run.py inputOmni 1
 結果はExperiment/resultN (Nは数字)に保存されます。
 Experiment/resultN/testResult/result.txt にtop-k accuracyが表示されます。
 
-## データセット
+## Dataset
 [こちらからダウンロードできます](https://drive.google.com/drive/folders/17BXn-vFv390EeBbiVqhUBWeIOnqt3th0)
 
 ここでは、全天球画像名をsphere.jpgとして説明します。
