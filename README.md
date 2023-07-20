@@ -69,3 +69,8 @@ Experiment/resultN/testResult/result.txt にtop-k accuracyが表示されます�
         * 表記形式は[OpenPose](https://github.com/Hzzone/pytorch-openpose)を参照してください。
 
 ROI.zipに含まれる値は正解なのに対し、skeleton.zipに含まれる値は推定結果であることに注意してください。
+
+### How to use the dataset
+```
+python run.py -input ../dataset/image  -skelton ../dataset/skeleton
+```
