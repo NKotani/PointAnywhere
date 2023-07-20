@@ -249,7 +249,7 @@ for file in files:
     obj = ROI.match_obj(detected, rot_z, rot_y, vec)
     result = ROI.distance_circle(obj, rot_z, rot_y, [z[first],y[first]], [z[final],y[final]])
     # print(result) # [(8.069252459121573,['chair', [2862, 1597, 545, 610], 0.57567]), ...]
-    ground_truth = 'ROI/' + sphere + '.txt'
+    ground_truth = os.path.join(os.path.split(os.path.dirname(file))[0], 'ROI', sphere+'.txt')
     test_file = 'dummy'
     if  testMODE == 0: # 定性評価のとき
         # Test.crop_obj(obj, file)
