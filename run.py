@@ -24,10 +24,13 @@ body_estimation = Body('pytorch_openpose/model/body_pose_model.pth')
 parser = argparse.ArgumentParser(description='Estimate a pointing object')
 parser.add_argument('-input', default='inputOmni', type=str, help='path of equirectangular images') # './inputOmni/R0010095.JPG', '../../dataset/image'
 parser.add_argument('-testMODE', default=0, type=int, help='do not save images') # 1のとき余計な画像保存しない
+parser.add_argument('-skelton', default='', type=str, help='Path of the folder containing the results of the pre-estimated user') # 'skelton/'
+
 args = parser.parse_args()
 
 input =  args.input
-testMODE = args.testMODE 
+testMODE = args.testMODE
+skelton_path = args.skelton
 
 dt_now = datetime.datetime.now()
 stdout = dt_now.strftime('%Y%m%dg%H%M%S')
@@ -55,7 +58,7 @@ if testMODE == 0: # 定性評価のとき
     (testResult_distance_f).mkdir(parents=True, exist_ok=True)  # make dir
     (testResult_vec_f).mkdir(parents=True, exist_ok=True)  # make dir
 
-# OpenPose pytorch版
+# OpenPose (pytorch)
 if os.path.isdir(input):
     files = glob.glob(input + "/*")
 else:
@@ -66,16 +69,21 @@ for file in files:
     Test.write_stdout(sphere, stdout, testResult_f)
 
     command = []
-    if  testMODE == 0: # 定性評価のとき
-        command = ['python','yolov5/detect.py','--weights','yolov5/yolov5s.pt','--source',file,'--save-txt','--exist-ok','--save-conf','--project',obj_f,'--name',sphere,'--classes','0','--imgsz','640','1280']
-    else: # 定量評価
-        command = ['python','yolov5/detect.py','--weights','yolov5/yolov5s.pt','--source',file,'--save-txt','--exist-ok','--save-conf','--project',obj_f,'--name',sphere,'--classes','0','--imgsz','640','1280','--nosave']
-    proc = subprocess.run(command, capture_output=True)
-    # print('return code: {}'.format(proc.returncode))
-    # print('captured stdout: {}'.format(proc.stdout.decode()))
-    # print('captured stderr: {}'.format(proc.stderr.decode()))
+    if not skelton_path:
+        if not skelton_path and testMODE == 0: # 定性評価のとき
+            command = ['python','yolov5/detect.py','--weights','yolov5/yolov5s.pt','--source',file,'--save-txt','--exist-ok','--save-conf','--project',obj_f,'--name',sphere,'--classes','0','--imgsz','640','1280']
+        elif not skelton_path and testMODE == 1: # 定量評価
+            command = ['python','yolov5/detect.py','--weights','yolov5/yolov5s.pt','--source',file,'--save-txt','--exist-ok','--save-conf','--project',obj_f,'--name',sphere,'--classes','0','--imgsz','640','1280','--nosave']
+        proc = subprocess.run(command, capture_output=True)
+        # print('return code: {}'.format(proc.returncode))
+        # print('captured stdout: {}'.format(proc.stdout.decode()))
+        # print('captured stderr: {}'.format(proc.stderr.decode()))
     people = {}
-    name_txt = os.path.join(obj_f, sphere+ '/labels/' + sphere + '.txt') # 'obj/'+sphere+'/labels/'
+    name_txt = ''
+    if not skelton_path:
+        name_txt = os.path.join(obj_f, sphere+ '/labels/' + sphere + '.txt') # 'obj/'+sphere+'/labels/'
+    else:
+        name_txt = os.path.join(skelton_path, sphere+ '/labels/' + sphere + '.txt')
     try:
         with open(name_txt, 'r') as f:
             persons = f.read().splitlines() # ['person 0.571615 0.548177 0.0279018 0.18936 0.789395']
@@ -109,16 +117,26 @@ for file in files:
             hfov = 150
     pers_h = int(pers_w * hfov / fov) # perspective画像の縦幅
 
+    candidate, subset = np.empty((1,1)), np.empty(1)
     Test.write_stdout(f'横fov={fov}, 縦fov={hfov}', stdout, testResult_f)
-    E2P.get_perspective(file, fov, theta, phi, pers_h, pers_w, outputOmni_f) # imgがreturnされるけど使わない
-    
-    pers_path = os.path.join(outputOmni_f, sphere + '_' + str(theta) + '_' + str(phi) + '.jpg') # './outputOmni/'
-    persImg = cv2.imread(pers_path)
-    candidate, subset = body_estimation(persImg)
+    if not skelton_path:
+        E2P.get_perspective(file, fov, theta, phi, pers_h, pers_w, outputOmni_f)
+        pers_path = os.path.join(outputOmni_f, sphere + '_' + str(theta) + '_' + str(phi) + '.jpg') # './outputOmni/'
+        persImg = cv2.imread(pers_path)
+        candidate, subset = body_estimation(persImg)
+    else:
+        human_filename = os.path.join(skelton_path, sphere + '/human')
+        npz_kw = np.load(human_filename+'.npz')
+        candidate = npz_kw['candidate']
+        subset = npz_kw['subset']
+    if testMODE == 0:
+        E2P.get_perspective(file, fov, theta, phi, pers_h, pers_w, outputOmni_f)
+        pers_path = os.path.join(outputOmni_f, sphere + '_' + str(theta) + '_' + str(phi) + '.jpg') # './outputOmni/'
+        persImg = cv2.imread(pers_path)
 
     sholder, wrist, vec = [], [], []
     joints_num, head, joints, msg = PointingVector.rightLeftArm_head_pytorch(candidate, subset)
-    if  testMODE ==  0: # 定性評価のとき
+    if testMODE ==  0: # 定性評価のとき
         persImg = util.draw_bodypose(persImg, candidate, subset)
         output = os.path.join(jointPers_f,  sphere + '_' + str(theta) + '_' + str(phi) + '.png')
         cv2.imwrite(output, persImg) # OpenPoseの結果
