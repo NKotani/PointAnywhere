@@ -325,16 +325,7 @@ def cal_top1_5_10ALL(testResult_f='Result/great/testResult', dataset=125):
     cal_top1_5_10(score_file, testResult_f, dataset)
     score_file = os.path.join(testResult_f, 'score_confi.txt')
     cal_top1_5_10(score_file, testResult_f, dataset)
-    score_file = os.path.join(testResult_f, 'score_only.txt')
-    cal_top1_5_10(score_file, testResult_f, dataset)
-    # 面積補正
-    score_file = os.path.join(testResult_f, 'scoreAREA.txt')
-    cal_top1_5_10(score_file, testResult_f, dataset)
     # svm
-    score_file = os.path.join(testResult_f, 'score_svm.txt') # 
-    cal_top1_5_10(score_file, testResult_f, dataset)
-    score_file = os.path.join(testResult_f, 'score_svmrbf.txt') # (rbfカーネル)
-    cal_top1_5_10(score_file, testResult_f, dataset)
     # 正規化
     score_file = os.path.join(testResult_f, 'score_svmnorm.txt') # 
     cal_top1_5_10(score_file, testResult_f, dataset)
@@ -367,28 +358,9 @@ def run(result:list, ground_truth='../../dataset/ROI/R0010066.txt', stdout='2202
         Test.write_stdout(f'{score} {iou} {sphere} {confi_result[score-1][1][2]}', 'score_confi', testResult_f)
     except IndexError:
          Test.write_stdout(f'{score} {iou} {sphere} {100}', 'score_confi', testResult_f)
-    score, iou, only_result = only_one_of_same_object_select(result, ground_truth) # 同じものは1つだけ
-    # Test.write_stdout(f'上位{score}個目が正解で、iou={iou}', stdout, testResult_f)
-    try:
-        Test.write_stdout(f'{score} {iou} {sphere} {only_result[score-1][1][2]}', 'score_only', testResult_f)
-    except IndexError:
-        Test.write_stdout(f'{score} {iou} {sphere} {100}', 'score_only', testResult_f)
-    # 面積補正
-    score, iou, resultAREA = in_order_of_distanceAREA(result, ground_truth)
-    # Test.write_stdout(f'上位{score}個目が正解で、iou={iou}', stdout, testResult_f)
-    try:
-        Test.write_stdout(f'{score} {iou} {sphere} {resultAREA[score-1][1][2]}', 'scoreAREA', testResult_f)
-    except IndexError:
-        Test.write_stdout(f'{score} {iou} {sphere} {100}', 'scoreAREA', testResult_f)
     # svm
     dataset = 'dataset290'
     svm_data, obj_name = mlData.cal(result, theta) # [[3.9602220990045156, 0.08333333333333333, 0.343917, 0.08352847660943236, 54, ['cat', [2983, 1225, 1, 54], 0.343917]], ...]
-    svm_result0 = mlsvm.estimate(svm_data, obj_name, 'ml/'+dataset+'.pickle') # [[3.119450434853303 'tv' list([4788, 1626, 74, 123]) 0.847969]...]
-    score, iou, svm_result0 = svm(svm_result0, ground_truth) # [(3.119450434853303, ['tv', [4788, 1626, 74, 123], 0.847969])...]
-    Test.write_stdout(f'{score} {iou} {sphere}', 'score_svm', testResult_f)
-    svm_result0rbf = mlsvm.estimate(svm_data, obj_name, 'ml/'+dataset+'rbf.pickle') # rbfカーネル全学習版
-    score, iou, svm_result0rbf = svm(svm_result0rbf, ground_truth)
-    Test.write_stdout(f'{score} {iou} {sphere}', 'score_svmrbf', testResult_f)
     # 正規化
     svm_result0norm = mlsvm.estimate(svm_data, obj_name, 'ml/'+dataset+'norm.pickle', 1) # [[3.119450434853303 'tv' list([4788, 1626, 74, 123]) 0.847969]...]
     score, iou, svm_result0norm = svm(svm_result0norm, ground_truth) # [(3.119450434853303, ['tv', [4788, 1626, 74, 123], 0.847969])...]
@@ -408,11 +380,7 @@ def run(result:list, ground_truth='../../dataset/ROI/R0010066.txt', stdout='2202
         testResult_shortest_f = Path(os.path.join(testResult_f, 'shortest')) # 距離の短い順を格納
         testResult_number_f = Path(os.path.join(testResult_f, 'number')) # 物体の個数に基づく補正
         testResult_numberConfi_f = Path(os.path.join(testResult_f, 'numberConfi')) # 物体の個数に基づく補正(confidence低いのは3倍)
-        testResult_only_f = Path(os.path.join(testResult_f, 'only')) # 同じ物体は1つしか選ばない
-        testResult_shortestAREA_f = Path(os.path.join(testResult_f, 'shortestAREA')) # 距離の短い順を格納+面積補正
         # svm
-        testResult_svm_f = Path(os.path.join(testResult_f, 'svm')) # 
-        testResult_svmrbf_f = Path(os.path.join(testResult_f, 'svmrbf')) # (rbfカーネル)
         # 正規化
         testResult_svmnorm_f = Path(os.path.join(testResult_f, 'svmN')) # 
         testResult_svmnormrbf_f = Path(os.path.join(testResult_f, 'svmNrbf')) # (rbfカーネル)
@@ -423,10 +391,6 @@ def run(result:list, ground_truth='../../dataset/ROI/R0010066.txt', stdout='2202
         (testResult_shortest_f).mkdir(parents=True, exist_ok=True)  # make dir
         (testResult_number_f).mkdir(parents=True, exist_ok=True)
         (testResult_numberConfi_f).mkdir(parents=True, exist_ok=True)
-        (testResult_only_f).mkdir(parents=True, exist_ok=True)
-        (testResult_shortestAREA_f).mkdir(parents=True, exist_ok=True)  # make dir
-        (testResult_svm_f).mkdir(parents=True, exist_ok=True)
-        (testResult_svmrbf_f).mkdir(parents=True, exist_ok=True)
         (testResult_svmnorm_f).mkdir(parents=True, exist_ok=True)
         (testResult_svmnormrbf_f).mkdir(parents=True, exist_ok=True)
         (testResult_svmstd_f).mkdir(parents=True, exist_ok=True)
@@ -435,16 +399,10 @@ def run(result:list, ground_truth='../../dataset/ROI/R0010066.txt', stdout='2202
         Test.roi2imgTop5(result[:5], test_file, testResult_shortest_f) # 指差しベクトル自体はdistance_circleでかく
         Test.roi2imgTop5(num_result[:5], test_file, testResult_number_f) # 物体の個数で補正
         Test.roi2imgTop5(confi_result[:5], test_file, testResult_numberConfi_f) # 物体の個数で補正(confidence低いのは3倍)
-        Test.roi2imgTop5(only_result[:5], test_file, testResult_only_f) # 同じものは1つだけ
-        # 面積補正
-        Test.roi2imgTop5(resultAREA[:5], test_file, testResult_shortestAREA_f) # 指差しベクトル自体はdistance_circleでかく
-        # svm
-        Test.roi2imgTop5(svm_result0[:5], test_file, testResult_svm_f) # (線形)
-        Test.roi2imgTop5(svm_result0rbf[:5], test_file, testResult_svmrbf_f) # (rbf)
-        # 正規化
+        # svm正規化
         Test.roi2imgTop5(svm_result0norm[:5], test_file, testResult_svmnorm_f) # (線形)
         Test.roi2imgTop5(svm_result0normrbf[:5], test_file, testResult_svmnormrbf_f) # (rbf)
-        # 標準化
+        # svm標準化
         Test.roi2imgTop5(svm_result0std[:5], test_file, testResult_svmstd_f) # (線形)
         Test.roi2imgTop5(svm_result0stdrbf[:5], test_file, testResult_svmstdrbf_f) # (rbf)
 

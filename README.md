@@ -35,14 +35,10 @@ testResult内の画像について
 * shortest: 物体領域中心と指示ベクトルとの距離(補正なし)
 * number: 物体の出現頻度に基づく補正
 * numberConfi: 物体の出現頻度に基づく補正 + 物体検出の信頼度に基づく補正
-* only: 同じカテゴリの物体が1度しか選ばればいようにする補正
-* shortestAREA: 物体領域の面積に基づく補正
-* svm: 線形SVC
-* svmrbf: rbfカーネルのSVC
 * svmN: 線形SVCでデータを正規化
-* svmBrbf: rbfカーネルのSVCでデータを正規化
-* svm: 線形SVCでデータを標準化
-* svmrbf: rbfカーネルのSVCでデータを標準化
+* svmNrbf: rbfカーネルのSVCでデータを正規化
+* svmS: 線形SVCでデータを標準化
+* svmSrbf: rbfカーネルのSVCでデータを標準化
 
 結果はExperiment/resultN (Nは数字)に保存されます。
 Experiment/resultN/testResult/result.txt にtop-k accuracyが表示されます。
