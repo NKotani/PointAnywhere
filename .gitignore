@@ -269,7 +269,19 @@ videos/
 
 # PointAnywhere
 !/inputOmni/*.jpg
-!/Experiment/result/[.*]/*.png
-!/Experiment/result/[.*]/[.*]/*.png
-!/Experiment/result/[.*]/*.jpg
-!/Experiment/result/[.*]/[.*]/*.jpg
+!/Experiment/result/greatOmni/*.png
+!/Experiment/result/jointPers/*.png
+!/Experiment/result/jointPers/finger/*.jpg
+!/Experiment/result/R0010[...]/*.jpg
+!/Experiment/result/obj/R0010[...]/*.jpg
+!/Experiment/result/outDirect/R0010[...]/*.jpg
+!/Experiment/result/outputOmni/*.jpg
+!/Experiment/result/testResult/distance/*.jpg
+!/Experiment/result/testResult/number/*.jpg
+!/Experiment/result/testResult/numberConfi/*.jpg
+!/Experiment/result/testResult/shortest/*.jpg
+!/Experiment/result/testResult/svmN/*.jpg
+!/Experiment/result/testResult/svmNrbf/*.jpg
+!/Experiment/result/testResult/svmS/*.jpg
+!/Experiment/result/testResult/svmSrbf/*.jpg
+!/Experiment/result/testResult/vec/*.jpg
