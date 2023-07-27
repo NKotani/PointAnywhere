@@ -70,3 +70,8 @@ ROI.zipに含まれる値は正解なのに対し、skeleton.zipに含まれる�
 ```
 python run.py -input ../dataset/image  -skelton ../dataset/skeleton
 ```
+
+## Supplementation
+全天球画像からの人検出には成功したが、骨格検出に失敗した場合は図のように人の180度先を抽出して指示物体推定を行います。
+この例では、2番目の自転車が正解物体です。
+![The equirectangular image of a user pointing to a green bicycle outdoors.](Experiment/result/testResult/svmS/R0010487_top5.jpg "A Successful example for extracting 180 degrees ahead")

@@ -70,3 +70,8 @@ Note that the values in ROI.zip are the correct answers, whereas the values in s
 ```
 python run.py -input ../dataset/image  -skelton ../dataset/skeleton
 ```
+
+## Supplementation
+If the person detection from the equirectangular image is successful, but the skeleton detection fails, then the 180-degree ahead of the person is extracted and the pointing object estimation is performed as shown in the figure.
+In this example, the second bicycle is the correct object.
+![The equirectangular image of a user pointing to a green bicycle outdoors.](Experiment/result/testResult/svmS/R0010487_top5.jpg "A Successful example for extracting 180 degrees ahead")
