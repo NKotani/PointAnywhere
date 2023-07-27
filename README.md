@@ -1,7 +1,7 @@
 PointAnywhere
 ====
 This code performs directed object estimation from omnidirectional images. [日本語版](README_ja.md)
-![The equirectangular image of a user pointing to a white car outdoors.](images/R0010498_top5.jpg "A Successful example")
+![The equirectangular image of a user pointing to a white car outdoors.](Experiment/result/testResult/svnS/R0010498_top5.jpg "A Successful example")
 
 Nanami Kotani and Asako Kanezaki. 2023. Point Anywhere: Directed Object Estimation from Omnidirectional Images. In ACM SIGGRAPH 2023 Posters (SIGGRAPH '23). Association for Computing Machinery, New York, NY, USA, Article 33, 1–2. https://doi.org/10.1145/3588028.3603650
 * [ACM showcase on Kudos](https://link.growkudos.com/1cvv7ucfim8)

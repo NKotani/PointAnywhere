@@ -268,4 +268,5 @@ __pycache__
 videos/
 
 # PointAnywhere
-!/images/*.jpg
+!/inputOmni/*.jpg
+!/Experiment/result/
