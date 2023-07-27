@@ -269,5 +269,7 @@ videos/
 
 # PointAnywhere
 !/inputOmni/*.jpg
-!/Experiment/result/*
-/Experiment/result/.DS_Store
+!/Experiment/result/[.*]/*.png
+!/Experiment/result/[.*]/[.*]/*.png
+!/Experiment/result/[.*]/*.jpg
+!/Experiment/result/[.*]/[.*]/*.jpg
