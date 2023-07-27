@@ -269,4 +269,4 @@ videos/
 
 # PointAnywhere
 !/inputOmni/*.jpg
-!/Experiment/result/
+!/Experiment/result/*
