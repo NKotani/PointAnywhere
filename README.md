@@ -5,6 +5,7 @@ This code performs directed object estimation from omnidirectional images. [日�
 
 Nanami Kotani and Asako Kanezaki. 2023. Point Anywhere: Directed Object Estimation from Omnidirectional Images. In ACM SIGGRAPH 2023 Posters (SIGGRAPH '23). Association for Computing Machinery, New York, NY, USA, Article 33, 1–2. https://doi.org/10.1145/3588028.3603650
 * [ACM showcase on Kudos](https://link.growkudos.com/1cvv7ucfim8)
+* [arXiv](https://arxiv.org/abs/2308.01010)
 
 ## Installation and Requirement
 * Skeltal detection: [OpenPose](https://github.com/Hzzone/pytorch-openpose)
