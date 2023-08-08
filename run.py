@@ -22,14 +22,14 @@ from ml import Data
 body_estimation = Body('pytorch_openpose/model/body_pose_model.pth')
 
 parser = argparse.ArgumentParser(description='Estimate a pointing object')
-parser.add_argument('-input', default='inputOmni', type=str, help='path of equirectangular images') # './inputOmni/R0010095.JPG', '../../dataset/image'
-parser.add_argument('-testMODE', default=0, type=int, help='do not save images') # 1のとき余計な画像保存しない
-parser.add_argument('-skelton', default='', type=str, help='Path of the folder containing the results of the pre-estimated user') # 'skelton/'
+parser.add_argument('-input', default='inputOmni', type=str, help='path of equirectangular images')
+parser.add_argument('-saveimg', default=1, type=int, help='save images when this is 1')
+parser.add_argument('-skelton', default='', type=str, help='Path of the folder containing the results of the pre-estimated user, i.e. skelton/')
 
 args = parser.parse_args()
 
 input =  args.input
-testMODE = args.testMODE
+saveimg = args.saveimg
 skelton_path = args.skelton
 
 dt_now = datetime.datetime.now()
@@ -51,7 +51,7 @@ testResult_vec_f = save_dir / 'testResult/vec'
 (obj_f).mkdir(parents=True, exist_ok=True)  # make dir
 (testResult_f).mkdir(parents=True, exist_ok=True)  # make dir
 
-if testMODE == 0: # 定性評価のとき
+if saveimg:
     (jointPers_f).mkdir(parents=True, exist_ok=True)  # make dir
     (jointPersFinger_f).mkdir(parents=True, exist_ok=True)
     (greatOmni_f).mkdir(parents=True, exist_ok=True)  # make dir
@@ -70,9 +70,9 @@ for file in files:
 
     command = []
     if not skelton_path:
-        if not skelton_path and testMODE == 0: # 定性評価のとき
+        if not skelton_path and saveimg == 1:
             command = ['python','yolov5/detect.py','--weights','yolov5/yolov5s.pt','--source',file,'--save-txt','--exist-ok','--save-conf','--project',obj_f,'--name',sphere,'--classes','0','--imgsz','640','1280']
-        elif not skelton_path and testMODE == 1: # 定量評価
+        elif not skelton_path and saveimg == 0:
             command = ['python','yolov5/detect.py','--weights','yolov5/yolov5s.pt','--source',file,'--save-txt','--exist-ok','--save-conf','--project',obj_f,'--name',sphere,'--classes','0','--imgsz','640','1280','--nosave']
         proc = subprocess.run(command, capture_output=True)
         # print('return code: {}'.format(proc.returncode))
@@ -129,14 +129,14 @@ for file in files:
         npz_kw = np.load(human_filename+'.npz')
         candidate = npz_kw['candidate']
         subset = npz_kw['subset']
-    if testMODE == 0:
+    if saveimg:
         E2P.get_perspective(file, fov, theta, phi, pers_h, pers_w, outputOmni_f)
         pers_path = os.path.join(outputOmni_f, sphere + '_' + str(theta) + '_' + str(phi) + '.jpg') # './outputOmni/'
         persImg = cv2.imread(pers_path)
 
     sholder, wrist, vec = [], [], []
     joints_num, head, joints, msg = PointingVector.rightLeftArm_head_pytorch(candidate, subset)
-    if testMODE ==  0: # 定性評価のとき
+    if saveimg:
         persImg = util.draw_bodypose(persImg, candidate, subset)
         output = os.path.join(jointPers_f,  sphere + '_' + str(theta) + '_' + str(phi) + '.png')
         cv2.imwrite(output, persImg) # OpenPoseの結果
@@ -156,7 +156,7 @@ for file in files:
     print(f'肩{sholder}手首{wrist}')
     z, y = [], []
 
-    if  testMODE == 0: # 定性評価のとき
+    if  saveimg: # 定性評価のとき
         z, y = GC.get(sholder, wrist, file, greatOmni_f, True) # 要素数1080個→30度は90個分
     else: # 定量評価
         z, y = GC.get(sholder, wrist, file, save=False) # zは必ず返ってくる
@@ -230,7 +230,7 @@ for file in files:
     for i in range(len(rot_z)):
         name = os.path.join(outDirect_f, sphere + '/' + sphere + '_' + str(int(rot_z[i])) + '_' + str(int(rot_y[i])) + '.jpg') # 'outDirect/'
         command = []
-        if  testMODE == 0: # 定性評価のとき
+        if  saveimg:
             command = ['python','yolov5/detect.py','--weights','yolov5/yolov5s.pt','--source',name,'--save-txt','--exist-ok','--save-conf','--project',obj_f,'--name', sphere, '--conf-thres', '0.28'] # 0.29以上のみ
         else: # 定量評価
             command = ['python','yolov5/detect.py','--weights','yolov5/yolov5s.pt','--source',name,'--save-txt','--exist-ok','--save-conf','--project',obj_f,'--name', sphere, '--conf-thres', '0.28', '--nosave']
@@ -251,12 +251,12 @@ for file in files:
     # print(result) # [(8.069252459121573,['chair', [2862, 1597, 545, 610], 0.57567]), ...]
     ground_truth = os.path.join(os.path.split(os.path.dirname(file))[0], 'ROI', sphere+'.txt')
     test_file = 'dummy'
-    if  testMODE == 0: # 定性評価のとき
+    if  saveimg: # 定性評価のとき
         # Test.crop_obj(obj, file)
         test_file = os.path.join(testResult_vec_f, sphere + '.jpg') # 'test_result/vec/' distance_circleでかいた画像
         Test.distance_circle(rot_z, rot_y, [z[first],y[first]], [z[final],y[final]], file, testResult_vec_f)
         Test.roi2img(obj, test_file, testResult_distance_f) # 指差しベクトル自体はdistance_circleでかく
-    Correct.run(result, ground_truth, stdout, testResult_f, sphere, testMODE, test_file, theta)
+    Correct.run(result, ground_truth, stdout, testResult_f, sphere, saveimg, test_file, theta)
     # データセットの作成
     # score, _ = Correct.in_order_of_distance(result, ground_truth)
     # result = Data.make(result, theta, sphere, score, stdout)

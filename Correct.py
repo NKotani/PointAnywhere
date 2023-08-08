@@ -339,7 +339,7 @@ def cal_top1_5_10ALL(testResult_f='Result/great/testResult', dataset=125):
     return
 
 # すべての選定手法を実行
-def run(result:list, ground_truth='../../dataset/ROI/R0010066.txt', stdout='22021231p1234', testResult_f='Result/great/testResult', sphere='ROO10066', testMODE=1, test_file='test_result/vec/R00100.jpg', theta=0):
+def run(result:list, ground_truth='../../dataset/ROI/R0010066.txt', stdout='22021231p1234', testResult_f='Result/great/testResult', sphere='ROO10066', saveimg=1, test_file='test_result/vec/R00100.jpg', theta=0):
     score, iou = in_order_of_distance(result, ground_truth)
     Test.write_stdout(f'上位{score}個目が正解で、iou={iou}', stdout, testResult_f)
     try:
@@ -376,7 +376,7 @@ def run(result:list, ground_truth='../../dataset/ROI/R0010066.txt', stdout='2202
     score, iou, svm_result0stdrbf = svm(svm_result0stdrbf, ground_truth)
     Test.write_stdout(f'{score} {iou} {sphere}', 'score_svmstdrbf', testResult_f)
 
-    if  testMODE == 0: # 定性評価のとき
+    if  saveimg:
         testResult_shortest_f = Path(os.path.join(testResult_f, 'shortest')) # 距離の短い順を格納
         testResult_number_f = Path(os.path.join(testResult_f, 'number')) # 物体の個数に基づく補正
         testResult_numberConfi_f = Path(os.path.join(testResult_f, 'numberConfi')) # 物体の個数に基づく補正(confidence低いのは3倍)
