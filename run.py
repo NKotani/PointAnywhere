@@ -19,7 +19,7 @@ from pytorch_openpose.src import util
 from pytorch_openpose.src.body import Body
 from ml import Data
 
-body_estimation = Body('pytorch_openpose/model/body_pose_model.pth')
+body_estimation = Body('pytorch_openpose/model/body_pose_model.pth') # OpenPose (pytorch)
 
 parser = argparse.ArgumentParser(description='Estimate a pointing object')
 parser.add_argument('-input', default='inputOmni', type=str, help='path of equirectangular images')
@@ -37,13 +37,13 @@ stdout = dt_now.strftime('%Y%m%dg%H%M%S')
 
 save_dir = increment_path(Path('./Experiment') / 'result', exist_ok=False)  # increment run
 print(save_dir)
-outputOmni_f = save_dir / 'outputOmni' # 必須
+outputOmni_f = save_dir / 'outputOmni'
 jointPers_f = save_dir / 'jointPers'
 jointPersFinger_f = save_dir / 'jointPers/finger'
 greatOmni_f = save_dir / 'greatOmni'
-outDirect_f = save_dir / 'outDirect' # 必須
-obj_f = save_dir / 'obj' # 必須, labelを作るのに必要だけどimgはいらない
-testResult_f = save_dir / 'testResult' # 必須
+outDirect_f = save_dir / 'outDirect'
+obj_f = save_dir / 'obj'
+testResult_f = save_dir / 'testResult'
 testResult_distance_f = save_dir / 'testResult/distance'
 testResult_vec_f = save_dir / 'testResult/vec'
 (outputOmni_f).mkdir(parents=True, exist_ok=True)  # make dir
@@ -52,13 +52,12 @@ testResult_vec_f = save_dir / 'testResult/vec'
 (testResult_f).mkdir(parents=True, exist_ok=True)  # make dir
 
 if saveimg:
-    (jointPers_f).mkdir(parents=True, exist_ok=True)  # make dir
+    (jointPers_f).mkdir(parents=True, exist_ok=True)
     (jointPersFinger_f).mkdir(parents=True, exist_ok=True)
-    (greatOmni_f).mkdir(parents=True, exist_ok=True)  # make dir
-    (testResult_distance_f).mkdir(parents=True, exist_ok=True)  # make dir
-    (testResult_vec_f).mkdir(parents=True, exist_ok=True)  # make dir
+    (greatOmni_f).mkdir(parents=True, exist_ok=True)
+    (testResult_distance_f).mkdir(parents=True, exist_ok=True)
+    (testResult_vec_f).mkdir(parents=True, exist_ok=True)
 
-# OpenPose (pytorch)
 if os.path.isdir(input):
     files = glob.glob(input + "/*")
 else:
