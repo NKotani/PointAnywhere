@@ -88,7 +88,7 @@ for file in files:
             for person in persons:
                 person = person.split() # ['person', '0.571615', '0.548177', '0.0279018', '0.18936', '0.789395']
                 people[float(person[5])] = [float(person[1]),float(person[2]),float(person[3]),float(person[4])]
-            people = sorted(people.items()) # confidenceが小さい順に並ぶ
+            people = sorted(people.items()) # in order of decreasing confidence
     except FileNotFoundError as e:
         Test.write_stdout(f'{-1} {sphere}', 'score', testResult_f) # fail to detect human from the equirectangular image
         continue
@@ -115,7 +115,7 @@ for file in files:
     pers_h = int(pers_w * hfov / fov) # hight of perspective image
 
     candidate, subset = np.empty((1,1)), np.empty(1)
-    Test.write_stdout(f'横fov={fov}, 縦fov={hfov}', stdout, testResult_f)
+    Test.write_stdout(f'horizontal fov={fov}, vartical fov={hfov}', stdout, testResult_f)
     if not skelton_path:
         E2P.get_perspective(file, fov, theta, phi, pers_h, pers_w, outputOmni_f)
         pers_path = os.path.join(outputOmni_f, sphere + '_' + str(theta) + '_' + str(phi) + '.jpg') # './outputOmni/'
@@ -131,7 +131,7 @@ for file in files:
         pers_path = os.path.join(outputOmni_f, sphere + '_' + str(theta) + '_' + str(phi) + '.jpg') # './outputOmni/'
         persImg = cv2.imread(pers_path)
 
-    sholder, wrist, vec = [], [], []
+    shoulder, wrist, vec = [], [], []
     joints_num, head, joints, msg = PointingVector.rightLeftArm_head_pytorch(candidate, subset)
     if saveimg:
         persImg = util.draw_bodypose(persImg, candidate, subset)
@@ -142,21 +142,21 @@ for file in files:
     print(msg)
     Test.write_stdout(msg, stdout, testResult_f)
     if joints_num == [-1]:
-        sholder = [theta + 170, 50] 
+        shoulder = [theta + 170, 50] 
         wrist = [theta + 170, 20]
         vec = [0, -30] # go downwards
     else:
         vec = PointingVector.get_vec_mid(joints, joints_num, head, theta, phi, pers_w, pers_h, fov)
-        wrist = np.rad2deg(P2E.get_angle([joints[joints_num[-1]][0], joints[joints_num[-1]][1]], theta, phi, pers_w, pers_h, fov)) # 指差している関節の一番端
-        sholder = [wrist[0]-vec[0], wrist[1]-vec[1]]
-    Test.write_stdout(f'指差している腕{joints_num}, 向き{vec}, 起点=肩({wrist})', stdout, testResult_f)
-    print(f'肩{sholder}手首{wrist}')
+        wrist = np.rad2deg(P2E.get_angle([joints[joints_num[-1]][0], joints[joints_num[-1]][1]], theta, phi, pers_w, pers_h, fov)) # the far end of the joint the human is pointing at
+        shoulder = [wrist[0]-vec[0], wrist[1]-vec[1]]
+    Test.write_stdout(f'The arm of pointing: {joints_num}, direction: {vec}, start = shoulder:({wrist})', stdout, testResult_f)
+    print(f'shoulder:{shoulder}, wrist:{wrist}')
     z, y = [], []
 
     if  saveimg:
-        z, y = GC.get(sholder, wrist, file, greatOmni_f, True) # Number of elements 1080 → 30 degrees for 90 elements
+        z, y = GC.get(shoulder, wrist, file, greatOmni_f, True) # Number of elements 1080 → 30 degrees for 90 elements
     else:
-        z, y = GC.get(sholder, wrist, file, save=False) # z will always return
+        z, y = GC.get(shoulder, wrist, file, save=False) # z will always return
 
     rot_z = []
     rot_y = []
@@ -196,7 +196,7 @@ for file in files:
                 rot_z.append(int(z[start_num]))
                 rot_y.append(int(y[start_num]))
                 last = start_num
-                Test.write_stdout(f'z方向:{rot_z[i]}, y方向:{rot_y[i]}', stdout, testResult_f)
+                Test.write_stdout(f'z-direction:{rot_z[i]}, y-direction:{rot_y[i]}', stdout, testResult_f)
                 E2P.get_perspective(file, 60, rot_z[i], rot_y[i], 640, 640, os.path.join(outDirect_f,sphere+'/'))
             else:
                 last = (last + const * 3) % 1080
@@ -209,7 +209,7 @@ for file in files:
                     opposite -= 5
                 rot_z.append(int(z[last]))
                 rot_y.append(int(y[last]))
-                Test.write_stdout(f'z方向:{rot_z[i]}, y方向:{rot_y[i]}', stdout, testResult_f)
+                Test.write_stdout(f'z-direction:{rot_z[i]}, y-direction:{rot_y[i]}', stdout, testResult_f)
                 E2P.get_perspective(file, 60, rot_z[i], rot_y[i], 640, 640, os.path.join(outDirect_f,sphere+'/'))
                 if  opposite >= 180: # from the starting point you are pointing to the opposite side 180° to the left and right.
                     print('Left or right 180° too far.')
@@ -245,9 +245,9 @@ for file in files:
     test_file = 'dummy'
     if  saveimg:
         # Test.crop_obj(obj, file)
-        test_file = os.path.join(testResult_vec_f, sphere + '.jpg') # 'test_result/vec/' distance_circleでかいた画像
+        test_file = os.path.join(testResult_vec_f, sphere + '.jpg') # 'test_result/vec/' the image created by distance_circle
         Test.distance_circle(rot_z, rot_y, [z[first],y[first]], [z[final],y[final]], file, testResult_vec_f)
-        Test.roi2img(obj, test_file, testResult_distance_f) # the pointing vector itself is represented by a distance_circle.
+        Test.roi2img(obj, test_file, testResult_distance_f) # the pointing vector itself is represented by a distance_circle
     Correct.run(result, ground_truth, stdout, testResult_f, sphere, saveimg, test_file, theta)
     # make dataset
     # score, _ = Correct.in_order_of_distance(result, ground_truth)
