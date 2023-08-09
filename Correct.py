@@ -308,10 +308,10 @@ def cal_top1_5_10(score='Result/great/testResult/score.txt', path='testResult', 
     with open(file, 'a', encoding='utf-8', newline='\n') as f:
         f.writelines(score)
         f.write('\n')
-        f.writelines(f'top-1 accuracy = {round(top1/dataset, 2)} 個数{top1}\n')
-        f.writelines(f'top-5 accuracy = {round(top5/dataset, 2)} 個数{top5}\n')
-        f.writelines(f'top-10 accuracy = {round(top10/dataset, 2)} 個数{top10}\n')
-        f.writelines(f'方向性は合ってる(top5) = {direction_right}\n')
+        f.writelines(f'top-1 accuracy = {round(top1/dataset, 2)}, quantity: {top1}\n')
+        f.writelines(f'top-5 accuracy = {round(top5/dataset, 2)}, quantity: {top5}\n')
+        f.writelines(f'top-10 accuracy = {round(top10/dataset, 2)}, quantity: {top10}\n')
+        f.writelines(f'In the right direction (top5) = {direction_right}\n')
         f.writelines(str(order))
         f.write('\n')
         # f.writelines(f'最低confidence = {min_confidence}\n')
@@ -341,19 +341,19 @@ def cal_top1_5_10ALL(testResult_f='Result/great/testResult', dataset=125):
 # すべての選定手法を実行
 def run(result:list, ground_truth='../../dataset/ROI/R0010066.txt', stdout='22021231p1234', testResult_f='Result/great/testResult', sphere='ROO10066', saveimg=1, test_file='test_result/vec/R00100.jpg', theta=0):
     score, iou = in_order_of_distance(result, ground_truth)
-    Test.write_stdout(f'上位{score}個目が正解で、iou={iou}', stdout, testResult_f)
+    Test.write_stdout(f'The top {score} is correct, iou={iou}', stdout, testResult_f)
     try:
         Test.write_stdout(f'{score} {iou} {sphere} {result[score-1][1][2]}', 'score', testResult_f) # 4個目はconfidence
     except IndexError:
         Test.write_stdout(f'{score} {iou} {sphere} {100}', 'score', testResult_f)
     score, iou, num_result = regularized_based_number_of_objects(result, ground_truth) # 物体の個数で補正
-    # Test.write_stdout(f'上位{score}個目が正解で、iou={iou}', stdout, testResult_f)
+    # Test.write_stdout(f'The top {score} is correct, iou={iou}', stdout, testResult_f)
     try:
         Test.write_stdout(f'{score} {iou} {sphere} {num_result[score-1][1][2]}', 'score_number', testResult_f)
     except IndexError:
         Test.write_stdout(f'{score} {iou} {sphere} {100}', 'score_number', testResult_f)
     score, iou, confi_result = regularized_based_number_of_objects_confi(result, ground_truth) # 物体の個数で補正(confidence低いのはスキップする版)
-    # Test.write_stdout(f'上位{score}個目が正解で、iou={iou}', stdout, testResult_f)
+    # Test.write_stdout(f'The top {score} is correct, iou={iou}', stdout, testResult_f)
     try:
         Test.write_stdout(f'{score} {iou} {sphere} {confi_result[score-1][1][2]}', 'score_confi', testResult_f)
     except IndexError:

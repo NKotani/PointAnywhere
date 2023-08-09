@@ -1,0 +1,71 @@
+R0010498
+horizontal fov=120, vartical fov=150
+Both arms are bent and left arm is up.
+The arm of pointing: [5, 6, 7], direction: [-60.86678577908836, 29.864500952746027], start(shoulder): ([40.09475735 33.90120251])
+z-direction:12, y-direction:36
+z-direction:-17, y-direction:31
+z-direction:-47, y-direction:18
+z-direction:-77, y-direction:-2
+z-direction:-107, y-direction:-22
+z-direction:-137, y-direction:-33
+z-direction:-167, y-direction:-36
+Left or right 180° too far.
+The top 1 is correct, iou=0.8862609619984055
+R0010329
+horizontal fov=14, vartical fov=30
+Both arms are bent and left arm is up.
+The arm of pointing: [5, 6, 7], direction: [1.4084909939728631, -1.354927388203763], start(shoulder): ([144.42483335  -1.20649263])
+z-direction:171, y-direction:-24
+z-direction:-158, y-direction:-39
+z-direction:-128, y-direction:-43
+z-direction:-98, y-direction:-40
+z-direction:-68, y-direction:-27
+z-direction:-38, y-direction:-1
+z-direction:-8, y-direction:24
+Left or right 180° too far.
+The top 1 is correct, iou=0.7582417582417582
+R0010074
+horizontal fov=120, vartical fov=150
+Right arm is bent.
+The arm of pointing: [5, 6, 7], direction: [-115.55350466878393, 59.14038323634114], start(shoulder): ([63.39691476 62.73459484])
+z-direction:36, y-direction:51
+z-direction:6, y-direction:11
+z-direction:-23, y-direction:-42
+z-direction:-53, y-direction:-60
+z-direction:-83, y-direction:-65
+z-direction:-133, y-direction:-57
+z-direction:-163, y-direction:-30
+Left or right 180° too far.
+The top 2 is correct, iou=0.6906746031746032
+R0010161
+horizontal fov=23, vartical fov=34
+2 points for the left arm and 3 points for the right arm.
+The arm of pointing: [2, 3, 4], direction: [6.193788782249061, 6.703787705317996], start(shoulder): ([-2.69898057 10.05668232])
+z-direction:23, y-direction:32
+z-direction:53, y-direction:45
+z-direction:83, y-direction:47
+z-direction:113, y-direction:41
+z-direction:143, y-direction:24
+z-direction:173, y-direction:-6
+z-direction:-156, y-direction:-32
+Left or right 180° too far.
+The top 1 is correct, iou=0.6070541480377546
+R0010207
+horizontal fov=13, vartical fov=20
+Right arm is bent.
+The arm of pointing: [5, 6, 7], direction: [2.461941312544473, 0.35886060081898796], start(shoulder): ([-153.89787285    1.37970284])
+z-direction:-127, y-direction:4
+z-direction:-97, y-direction:7
+z-direction:-67, y-direction:8
+z-direction:-37, y-direction:6
+z-direction:-7, y-direction:3
+z-direction:22, y-direction:0
+z-direction:52, y-direction:-4
+Left or right 180° too far.
+The top 6 is correct, iou=0.7371868131868132
+R0010487
+horizontal fov=120, vartical fov=150
+Less than 1 point detected on both arms.
+The arm of pointing: [-1], direction: [0, -30], start(shoulder): ([137, 20])
+The top 2 is correct, iou=0.8543290645879733
+20230809-163845

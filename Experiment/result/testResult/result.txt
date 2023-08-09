@@ -1,42 +1,42 @@
 Experiment/result/testResult/score.txt
-top-1 accuracy = 0.5 個数3
-top-5 accuracy = 0.83 個数5
-top-10 accuracy = 1.0 個数6
-方向性は合ってる(top5) = 1
+top-1 accuracy = 0.5, quantity: 3
+top-5 accuracy = 0.83, quantity: 5
+top-10 accuracy = 1.0, quantity: 6
+In the right direction (top5) = 1
 {1: 3, 2: 2, 6: 1}
 Experiment/result/testResult/score_number.txt
-top-1 accuracy = 0.67 個数4
-top-5 accuracy = 1.0 個数6
-top-10 accuracy = 1.0 個数6
-方向性は合ってる(top5) = 0
+top-1 accuracy = 0.67, quantity: 4
+top-5 accuracy = 1.0, quantity: 6
+top-10 accuracy = 1.0, quantity: 6
+In the right direction (top5) = 0
 {1: 4, 2: 1, 3: 1}
 Experiment/result/testResult/score_confi.txt
-top-1 accuracy = 0.83 個数5
-top-5 accuracy = 1.0 個数6
-top-10 accuracy = 1.0 個数6
-方向性は合ってる(top5) = 0
+top-1 accuracy = 0.83, quantity: 5
+top-5 accuracy = 1.0, quantity: 6
+top-10 accuracy = 1.0, quantity: 6
+In the right direction (top5) = 0
 {1: 5, 2: 1}
 Experiment/result/testResult/score_svmnorm.txt
-top-1 accuracy = 0.67 個数4
-top-5 accuracy = 1.0 個数6
-top-10 accuracy = 1.0 個数6
-方向性は合ってる(top5) = 0
+top-1 accuracy = 0.67, quantity: 4
+top-5 accuracy = 1.0, quantity: 6
+top-10 accuracy = 1.0, quantity: 6
+In the right direction (top5) = 0
 {1: 4, 5: 1, 2: 1}
 Experiment/result/testResult/score_svmnormrbf.txt
-top-1 accuracy = 0.33 個数2
-top-5 accuracy = 1.0 個数6
-top-10 accuracy = 1.0 個数6
-方向性は合ってる(top5) = 0
+top-1 accuracy = 0.33, quantity: 2
+top-5 accuracy = 1.0, quantity: 6
+top-10 accuracy = 1.0, quantity: 6
+In the right direction (top5) = 0
 {1: 2, 5: 1, 3: 1, 2: 2}
 Experiment/result/testResult/score_svmstd.txt
-top-1 accuracy = 0.5 個数3
-top-5 accuracy = 1.0 個数6
-top-10 accuracy = 1.0 個数6
-方向性は合ってる(top5) = 0
+top-1 accuracy = 0.5, quantity: 3
+top-5 accuracy = 1.0, quantity: 6
+top-10 accuracy = 1.0, quantity: 6
+In the right direction (top5) = 0
 {1: 3, 2: 3}
 Experiment/result/testResult/score_svmstdrbf.txt
-top-1 accuracy = 0.5 個数3
-top-5 accuracy = 1.0 個数6
-top-10 accuracy = 1.0 個数6
-方向性は合ってる(top5) = 0
+top-1 accuracy = 0.5, quantity: 3
+top-5 accuracy = 1.0, quantity: 6
+top-10 accuracy = 1.0, quantity: 6
+In the right direction (top5) = 0
 {1: 3, 2: 3}
