@@ -12,12 +12,11 @@ import Pers2Equi as P2E
 import numpy as np
 from utils.general import increment_path
 from pathlib import Path
-import sys
 import cv2
 import Correct
 from pytorch_openpose.src import util
 from pytorch_openpose.src.body import Body
-from ml import Data
+# from ml import Data
 
 body_estimation = Body('pytorch_openpose/model/body_pose_model.pth') # OpenPose (pytorch)
 
@@ -31,6 +30,8 @@ args = parser.parse_args()
 input =  args.input
 saveimg = args.saveimg
 skelton_path = args.skelton
+
+# OMNI_WIDTH = 5376 # width of equirectangular image
 
 dt_now = datetime.datetime.now()
 stdout = dt_now.strftime('%Y%m%dg%H%M%S')
@@ -91,12 +92,11 @@ for file in files:
                 people[float(person[5])] = [float(person[1]),float(person[2]),float(person[3]),float(person[4])]
             people = sorted(people.items()) # confidenceが小さい順に並ぶ
     except FileNotFoundError as e:
-        Test.write_stdout(f'{-1} {sphere}', 'score', testResult_f) # 全天球画像から人検出できなかった
+        Test.write_stdout(f'{-1} {sphere}', 'score', testResult_f) # fail to detect human from the equirectangular image
         continue
-    print(people[-1]) # 一番confidenceが高い人間:(0.885246, [0.0642671, 0.530506, 0.0191592, 0.0959821])
+    print(people[-1]) # the most hight confidence human:(0.885246, [0.0642671, 0.530506, 0.0191592, 0.0959821])
     high_person = people[-1]
     
-    omni_w = 5376 # 全天球画像の横幅
     pers_w = 432 # perspective画像の横幅
     human_x = high_person[1][0] - 0.5 # 人間の中心のx座標(-0.5~0.5)
     theta = int(human_x * 360)
