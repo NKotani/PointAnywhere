@@ -101,54 +101,50 @@ def rightLeftArm_head_pytorch(candidate, subset):
                 joints[i] = (x,y)
     lR = len(right)
     lL = len(left)
-    lH = len(head)
-    # 指差している腕の判定
-    # elif lH + lR + lL == 1:
-    #     point_arm = right + left # 関節1点(頭は別で渡す)
-    #     msg = '関節1点なので右に進んでみる' # get_vec参照
+    # Judgment of the arm the person is pointing at
     if lL <= 1 and lR <= 1: # 関節数0-1点
         point_arm = [-1]
-        msg = '両腕1点以下検出'
+        msg = 'Less than 1 point detected on both arms.'
     # 片方は関節2つ以上
     elif lR <= 1:
         point_arm = left # 右は肩しか取れてない
-        msg = '右腕は1点のみ'
+        msg = 'Only 1 point for the right arm.'
     elif lL <= 1:
         point_arm = right # 左は肩しか取れてない
-        msg = '左腕は1点のみ'
+        msg = 'Only 1 point for the left arm.'
     # 以下右も左も関節2つ以上
     elif lR <= 2 and lL == 3:
-        point_arm = left # 右は2つ左は3つ
-        msg = '右腕は2点で左腕は3点'
+        point_arm = left
+        msg = '2 points for the right arm and 3 points for the left arm.'
     elif lL <= 2 and lR == 3:
-        point_arm = right # 左は2つ右は3つ
-        msg = '左腕は2点で右腕は3点'
+        point_arm = right
+        msg = '2 points for the left arm and 3 points for the right arm.'
     # 両腕とも2点か両腕とも3点
     elif lR == 3 and (joints[3][0] - joints[2][0])*(joints[4][0] - joints[3][0]) < 0:
-        point_arm = left # 右腕が曲がっている
-        msg = '右腕が曲がっている'
+        point_arm = left
+        msg = 'Right arm is bent.'
         if lL == 3 and (joints[6][0] - joints[5][0])*(joints[7][0] - joints[6][0]) < 0: # 左腕も曲がっている
             if joints[right[-1]][1] < joints[left[-1]][1]:
-                point_arm = right # 右腕が上
-                msg = '両腕曲がっていて右腕が上'
+                point_arm = right
+                msg = 'Both arms are bent and right arm is up.'
             else:
-                point_arm = left # 左腕が上
-                msg = '両腕曲がっていて左腕が上'
+                point_arm = left
+                msg = 'Both arms are bent and left arm is up.'
     elif lL == 3 and (joints[6][0] - joints[5][0])*(joints[7][0] - joints[6][0]) < 0:
-        point_arm = right # 左腕が曲がっている
-        msg = '左腕が曲がっている'
+        point_arm = right
+        msg = 'Left arm is bent'
     elif joints[right[-1]][1] < joints[left[-1]][1]:
-        point_arm = right # 右腕が上
-        msg = '右腕が上'
+        point_arm = right
+        msg = 'Right arm is up.'
         if (lL > lR) and (abs(joints[3][0]-joints[6][0])<15 and abs(joints[3][1]-joints[6][1])<15): # 右腕が上でも左の関節の方が取れてる
             point_arm = left # 右肘と左肘の位置に差がないので多く関節が取れている方を使う
-            msg = '左腕の方がよく取れている'
+            msg = 'The left arm is better detected.'
     else:
         point_arm = left # 左腕が上
-        msg = '左腕が上'
+        msg = 'Left arm is up'
         if (lL < lR) and (abs(joints[3][0]-joints[6][0])<15 and abs(joints[3][1]-joints[6][1])<15): # 左腕が上でも右の関節の方が取れてる
             point_arm = right # 左肘と右肘を比べている
-            msg = '右腕の方がよく取れている'
+            msg = 'The right arm is better detected.'
     # 腕の長さの補正
     limb = 703.3 # 肩から指先
     arm = 303.95 # 肩から肘

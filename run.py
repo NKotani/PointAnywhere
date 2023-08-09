@@ -149,7 +149,7 @@ for file in files:
         vec = PointingVector.get_vec_mid(joints, joints_num, head, theta, phi, pers_w, pers_h, fov)
         wrist = np.rad2deg(P2E.get_angle([joints[joints_num[-1]][0], joints[joints_num[-1]][1]], theta, phi, pers_w, pers_h, fov)) # the far end of the joint the human is pointing at
         shoulder = [wrist[0]-vec[0], wrist[1]-vec[1]]
-    Test.write_stdout(f'The arm of pointing: {joints_num}, direction: {vec}, start = shoulder:({wrist})', stdout, testResult_f)
+    Test.write_stdout(f'The arm of pointing: {joints_num}, direction: {vec}, start(shoulder): ({wrist})', stdout, testResult_f)
     print(f'shoulder:{shoulder}, wrist:{wrist}')
     z, y = [], []
 
