@@ -8,7 +8,7 @@ import os
 import glob
 import GreatCircle as GC
 import datetime
-import Per2Eq as P2E
+import Pers2Equi as P2E
 import numpy as np
 from utils.general import increment_path
 from pathlib import Path
@@ -64,7 +64,7 @@ else:
     files = [input]
 
 for file in files:
-    sphere = os.path.splitext(os.path.basename(file))[0] # 全天球画像の名前(R0010068)
+    sphere = os.path.splitext(os.path.basename(file))[0] # name of equirectangular image (R0010068)
     Test.write_stdout(sphere, stdout, testResult_f)
 
     command = []

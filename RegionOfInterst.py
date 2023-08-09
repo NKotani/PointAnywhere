@@ -1,5 +1,5 @@
 import numpy
-import Per2Eq as P2E
+import Pers2Equi as P2E
 
 # perspective画像のYOLO形式ROIをEq形式に変換する
 def pers2eq(x:float, y:float, w:float, h:float, rot_z:int, rot_y:int, pers_w=1, pers_h=1, fov=60, eq_w=5376):

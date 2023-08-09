@@ -1,4 +1,4 @@
-import Per2Eq as P2E
+import Pers2Equi as P2E
 import numpy as np
 
 # 関節からベクトルを求める(角度) 頭ー指先または肩ー指先のベクトルを求める
