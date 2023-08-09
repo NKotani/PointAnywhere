@@ -3,20 +3,12 @@ import Pers2Equi as P2E
 
 # perspective画像のYOLO形式ROIをEq形式に変換する
 def pers2eq(x:float, y:float, w:float, h:float, rot_z:int, rot_y:int, pers_w=1, pers_h=1, fov=60, eq_w=5376):
-    # w_eq = w * eq_w / 6 # persのfovが60/360
-    # h_eq = h * eq_h / 3 # persのfovが60/180
     x_small = x - w/2 # 右上の座標
     y_small = y - h/2
     x_big = x + w/2
     y_big = y + h/2
     right_up = P2E.per2eq([x_small, y_small], rot_z, rot_y, pers_w, pers_h, fov) # pers_w=640でも1のままでも同じ
-    # right_down = P2E.per2eq([x_small, y_big], rot_z, rot_y, pers_w, pers_h, fov) # 右下
-    # left_up = P2E.per2eq([x_big, y_small],rot_z, rot_y, pers_w, pers_h, fov) # 左下の座標
     left_down = P2E.per2eq([x_big, y_big],rot_z, rot_y, pers_w, pers_h, fov) # 左下の座標
-    # x_eq = min(right_up[0], left_up[0]) # あまり変わらない
-    # y_eq = min(right_up[1], left_up[1])
-    # w_eq = max(right_down[0], left_down[0]) - x_eq
-    # h_eq = max(right_down[1], left_down[1]) - y_eq
     x_eq = min(right_up[0], left_down[0])
     y_eq = right_up[1]
     w_eq = max(right_up[0], left_down[0]) - x_eq # /形のときがあるから右上が小さいとは限らない
