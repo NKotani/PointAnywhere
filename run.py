@@ -31,8 +31,6 @@ input =  args.input
 saveimg = args.saveimg
 skelton_path = args.skelton
 
-# OMNI_WIDTH = 5376 # width of equirectangular image
-
 dt_now = datetime.datetime.now()
 stdout = dt_now.strftime('%Y%m%dg%H%M%S')
 
