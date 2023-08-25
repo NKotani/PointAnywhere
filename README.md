@@ -45,7 +45,10 @@ Results are stored in "Experiment/resultN" (N is a number).
 The top-k accuracy is displayed in "Experiment/resultN/testResult/result.txt".
 
 ## Dataset
-[You can download dataset here.](https://drive.google.com/drive/folders/17BXn-vFv390EeBbiVqhUBWeIOnqt3th0)
+Download dataset
+* [image.zip](https://drive.google.com/file/d/1-9iplILtYPlYebf_mDb6cP9KI9yZy5Ho/view?usp=drive_link)
+* [ROI.zip](https://drive.google.com/file/d/1-9DS1dGiIEbtowdxYCIiBLBxsx2LClkU/view?usp=drive_link)
+* [skeleton.zip](https://drive.google.com/file/d/1-IB8Pp2KLVPZaRgQA3XaBZghLoH0EGW6/view?usp=drive_link)
 
 Here, the name of the equirectangular image is "sphere.jpg".
 * image.zip: 290 equirectangular images

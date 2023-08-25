@@ -45,7 +45,10 @@ testResult内の画像について
 Experiment/resultN/testResult/result.txt にtop-k accuracyが表示されます。
 
 ## Dataset
-[こちらからダウンロードできます。](https://drive.google.com/drive/folders/17BXn-vFv390EeBbiVqhUBWeIOnqt3th0)
+ダウンロードは次のリンクからできます。
+* [image.zip](https://drive.google.com/file/d/1-9iplILtYPlYebf_mDb6cP9KI9yZy5Ho/view?usp=drive_link)
+* [ROI.zip](https://drive.google.com/file/d/1-9DS1dGiIEbtowdxYCIiBLBxsx2LClkU/view?usp=drive_link)
+* [skeleton.zip](https://drive.google.com/file/d/1-IB8Pp2KLVPZaRgQA3XaBZghLoH0EGW6/view?usp=drive_link)
 
 ここでは、全天球画像名をsphere.jpgとして説明します。
 * image.zip: 全天球画像290枚
